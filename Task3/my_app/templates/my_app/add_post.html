@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}
+    Добавление поста :: {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <h1>Добавление поста</h1>
+    <form action="{% url 'add_post' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+                {{ form.as_p }}
+        <button type="submit" class="btn-primary btn-lg">Добавить пост</button>
+    </form>
+{% endblock %}

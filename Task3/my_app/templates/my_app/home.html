@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ title }} :: {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+    {% for item in post %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="media d-block">
+                    <img src="{{ item.photo.url }}" alt="" width="350" height="260" class="float-left mr-3 ml-3">
+                    <div class="media-body ml-3">
+                        <h5 class="card-title">{{ item.title }}</h5>
+                        {% if request.user.email == item.user.email %}
+                            <div class="d-flex flex-row-reverse bd-highlight">
+                                <a href="{% url 'post_edit' item.pk %}" class="text-body">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                        <p class="card-text">{{ item.description }}</p>
+                        <p class="card-text"><small class="text-muted">Автор: {{ item.user.email }}</small></p>
+                        {% if request.user.is_superuser %}
+                            <form method="POST" action="{% url 'post_del' item.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger">Удалить</button>
+                            </form>
+                        {% endif %}
+                        {% if request.user.is_authenticated %}
+                            <br>
+                            <a class="btn btn-info" href="{% url 'comment' item.pk %}">Оставить комментарий</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

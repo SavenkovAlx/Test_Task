@@ -1,0 +1,8 @@
+{% extends 'admin/change_form.html' %}
+
+{% block submit_buttons_bottom %}
+    {{ block.super }}
+    <div class="submit-row">
+            <input class="deletelink" type="submit" value="Удалить комментарии" name="_delete_comments">
+    </div>
+{% endblock %}
